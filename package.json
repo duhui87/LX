@@ -2,7 +2,7 @@
   "name": "lxmusic-plugin",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && songloft-builder build"
+    "build": "tsc && npx songloft-builder build"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
