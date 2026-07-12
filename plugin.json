@@ -1,16 +1,11 @@
 {
-  "name": "lxmusic",
+  "name": "lxmusic-plugin",
   "version": "1.0.0",
-  "entryPath": "lxmusic",
+  "description": "LX Music Plugin for Songloft",
+  "author": "YourName",
   "main": "main.js",
-  "minHostVersion": "1.0.0",
+  "minHostVersion": "2.0.0",
   "permissions": [
-    "storage",
-    "songs.read",
-    "songs.write",
-    "playlists.read",
-    "playlists.write",
-    "jsenv"
-  ],
-  "description": "Songloft 洛雪第三方音源接入插件，支持多平台元数据检索与自定义脚本播放直链解析。"
+    "network"
+  ]
 }
