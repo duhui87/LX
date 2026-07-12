@@ -1,12 +1,17 @@
 {
-  "name": "lxmusic-plugin",
+  "name": "songloft-plugin-lxmusic",
   "version": "1.0.0",
+  "description": "Songloft lxmusic provider plugin",
+  "main": "dist/main.js",
   "scripts": {
-    "build": "tsc && npx songloft-builder build"
+    "build": "songloft-plugin build",
+    "dev": "songloft-plugin dev",
+    "validate": "songloft-plugin validate"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
-    "@songloft/plugin-sdk": "latest",
-    "@songloft/plugin-builder": "latest"
+    "@songloft/plugin-builder": "^1.0.0",
+    "@songloft/plugin-sdk": "^1.0.0",
+    "crypto-js": "^4.2.0",
+    "typescript": "^5.0.0"
   }
 }
