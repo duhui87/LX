@@ -1,8 +1,6 @@
 name: Build and Release Songloft Plugin
 
-# 触发器配置
 on:
-  # 关键：只保留这一个，代表只有你在网页上手动点击 "Run workflow" 才会触发编译
   workflow_dispatch:
 
 jobs:
@@ -18,14 +16,12 @@ jobs:
         with:
           node-version: 24
 
-      - name: Install System Zip
-        run: sudo apt-get update && sudo apt-get install -y zip
-
       - name: Install Dependencies & Build
         run: |
           npm install
           npm run build
 
+      # 此时官方 builder 会在 dist 目录下精准生成符合标准的 .jsplugin.zip 包
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -34,6 +30,6 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            dist/lxmusic.jsplugin.zip
+            dist/*.jsplugin.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
