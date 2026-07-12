@@ -1,11 +1,9 @@
 name: Build and Release Songloft Plugin
 
+# 触发器配置
 on:
+  # 关键：只保留这一个，代表只有你在网页上手动点击 "Run workflow" 才会触发编译
   workflow_dispatch:
-  push:
-    branches:
-      - main
-      - master
 
 jobs:
   build:
@@ -18,11 +16,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          # 升级到 Node.js 24 彻底消除过时警告
           node-version: 24
-          
 
-      # 在云端服务器补齐 zip 工具，防止因为系统缺少 zip 导致 exit code 2
       - name: Install System Zip
         run: sudo apt-get update && sudo apt-get install -y zip
 
