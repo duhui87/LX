@@ -2,10 +2,11 @@
   "name": "lxmusic-plugin",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && mkdir -p dist && cp plugin.json dist/ && cd dist && zip -r lxmusic.jsplugin.zip main.js plugin.json"
+    "build": "tsc && songloft-builder build"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
-    "@songloft/plugin-sdk": "latest"
+    "@songloft/plugin-sdk": "latest",
+    "@songloft/plugin-builder": "latest"
   }
 }
