@@ -1,11 +1,18 @@
 {
-  "name": "lxmusic-plugin",
+  "name": "lxmusic",
   "version": "1.0.0",
-  "description": "LX Music Plugin for Songloft",
-  "author": "YourName",
+  "entryPath": "lxmusic",
   "main": "main.js",
-  "minHostVersion": "2.0.0",
+  "minHostVersion": "1.0.0",
   "permissions": [
-    "network"
-  ]
+    "storage",
+    "songs.read",
+    "songs.write",
+    "playlists.read",
+    "playlists.write",
+    "jsenv"
+  ],
+  "download_url": "",
+  "entryHash": "",
+  "zipHash": ""
 }
