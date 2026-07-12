@@ -1,0 +1,48 @@
+name: Build and Release Songloft Plugin
+
+on:
+  # 允许手动触发编译
+  workflow_dispatch:
+  # 当你推送到 main 或 master 分支时自动触发
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 检出仓库代码
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      # 2. 安装 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # 3. 安装依赖并执行打包
+      - name: Install Dependencies & Build
+        run: |
+          npm install
+          # 如果你使用的是 songloft-plugin 官方脚手架自带的打包命令
+          npx songloft-plugin build || npm run build
+
+      # 4. 自动发布到 GitHub Release 并提供下载
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # 使用当前的日期和时间作为版本号
+          tag_name: build-${{ github.run_number }}
+          name: Release Build ${{ github.run_number }}
+          draft: false
+          prerelease: false
+          # 将编译好的压缩包上传到 Release 中
+          files: |
+            dist/lxmusic.jsplugin.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
