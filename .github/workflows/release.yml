@@ -1,1 +1,39 @@
 
+name: Build and Release Songloft Plugin
+
+# 触发器配置
+on:
+  # 关键：这个配置代表允许在 GitHub 网页上“手动点击按钮”触发编译
+  workflow_dispatch:
+    # (可选) 你甚至可以加上参数，比如手动触发时允许选择输入版本号，如果不加参数保持空白即可
+    inputs:
+      custom_note:
+        description: '本次手动编译的备注信息'
+        required: false
+        default: '手动触发构建'
+
+  # 自动触发：推送到 main 分支时也自动编译
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 你可以在后续步骤中读取到你手动输入的参数（如果有的话）
+      - name: Log Custom Note
+        run: echo "本次构建备注：${{ github.event.inputs.custom_note }}"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
