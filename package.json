@@ -1,0 +1,11 @@
+{
+  "name": "lxmusic-plugin",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && cp plugin.json dist/ && cd dist && zip -r lxmusic.jsplugin.zip main.js plugin.json"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@songloft/plugin-sdk": "latest"
+  }
+}
