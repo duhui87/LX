@@ -1,0 +1,81 @@
+name: Release Plugin
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build plugin (also writes entryHash/zipHash into build/plugin.json)
+        run: npm run build
+
+      - name: Compute date version
+        id: version
+        run: echo "ver=v$(date +'%Y.%-m.%-d')" >> "$GITHUB_OUTPUT"
+
+      - name: Locate artifacts
+        id: artifact
+        run: |
+          ZIP=$(ls dist/*.jsplugin.zip 2>/dev/null | head -1)
+          if [ -z "$ZIP" ]; then echo "::error::no .jsplugin.zip in dist/"; exit 1; fi
+          echo "zip=${ZIP}" >> "$GITHUB_OUTPUT"
+          echo "zipname=$(basename "$ZIP")" >> "$GITHUB_OUTPUT"
+
+      - name: Update plugin.json (version + download_url), keep builder-computed hashes
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const ver = process.env.VER;
+          const zipName = process.env.ZIPNAME;
+          // 源 manifest
+          const p = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
+          p.version = ver.replace(/^v/, '');
+          p.download_url = `https://github.com/${process.env.GITHUB_REPOSITORY}/releases/download/${ver}/${zipName}`;
+          fs.writeFileSync('plugin.json', JSON.stringify(p, null, 2) + '\n');
+          // 构建产物里的 build/plugin.json 已经由 builder 填好 entryHash/zipHash,整份作为发布清单
+          NODE
+        env:
+          VER: ${{ steps.version.outputs.ver }}
+          ZIPNAME: ${{ steps.artifact.outputs.zipname }}
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plugin.json
+          git commit -m "chore: bump version to ${{ steps.version.outputs.ver }}" || echo "nothing to commit"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.ver }}
+          name: ${{ steps.version.outputs.ver }}
+          body: |
+            Auto-generated release for the Songloft lxmusic plugin.
+
+            > 免责声明:仅供个人学习研究,禁止商用;用户须自行清除产生的版权数据。
+          files: |
+            ${{ steps.artifact.outputs.zip }}
+            dist/*.json
+          fail_on_unmatched_files: true
+
+      - name: Push version bump
+        run: git push || echo "push skipped (do it manually)"
