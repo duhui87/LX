@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>洛雪音源 · Songloft</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header class="appbar">
+    <div class="appbar-title">洛雪音源</div>
+    <div class="appbar-sub">lxmusic · 多平台元数据 + 自定义音源解析</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="search">搜索</button>
+    <button class="tab" data-tab="source">音源管理</button>
+    <button class="tab" data-tab="musiclib">音乐库</button>
+  </nav>
+
+  <main>
+    <!-- 全局提示横幅 -->
+    <div id="banner" class="banner hidden"></div>
+
+    <!-- Tab: 搜索 -->
+    <section id="tab-search" class="tabpanel active">
+      <div class="card">
+        <div class="row">
+          <select id="search-source" class="input"></select>
+          <select id="search-quality" class="input">
+            <option value="128k">128k</option>
+            <option value="320k">320k</option>
+            <option value="flac">无损</option>
+          </select>
+          <input id="search-keyword" class="input grow" type="text" placeholder="输入歌名/歌手……" />
+          <button id="btn-search" class="btn primary">搜索</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="list-head">
+          <span>歌曲</span>
+          <span class="actions-head">操作</span>
+        </div>
+        <div id="search-result" class="list">
+          <div class="empty">输入关键词开始搜索</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab: 音源管理 -->
+    <section id="tab-source" class="tabpanel">
+      <div class="card">
+        <div class="row">
+          <input class="input grow" type="text" id="source-url" placeholder="粘贴远程 .js 音源 URL……" />
+          <button id="btn-import-url" class="btn">远程导入</button>
+        </div>
+        <div class="row">
+          <label class="file-btn btn" for="source-file">选择 .js / .zip 导入</label>
+          <input id="source-file" type="file" accept=".js,.zip" hidden />
+        </div>
+        <div id="batch-progress" class="progress hidden">
+          <div class="progress-bar" id="batch-bar"></div>
+          <span id="batch-text"></span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="list-head"><span>已导入音源</span><span class="actions-head">操作</span></div>
+        <div id="source-list" class="list">
+          <div class="empty">尚未导入任何音源</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab: 音乐库 -->
+    <section id="tab-musiclib" class="tabpanel">
+      <div class="card">
+        <div class="row">
+          <select id="lib-platform" class="input"></select>
+          <select id="lib-listtype" class="input">
+            <option value="leaderboard">排行榜</option>
+            <option value="songlist">歌单</option>
+          </select>
+          <select id="lib-sub" class="input grow"></select>
+          <button id="btn-browse" class="btn">浏览</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="list-head"><span>歌曲</span><span class="actions-head">操作</span></div>
+        <div id="lib-result" class="list">
+          <div class="empty">选择榜单/歌单浏览</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="backlog-head">
+          <span>导入队列</span>
+          <button id="btn-import-all" class="btn small">导入全部</button>
+        </div>
+        <div id="import-queue" class="list">
+          <div class="empty">勾选歌曲后加入导入队列</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

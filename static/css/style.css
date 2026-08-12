@@ -1,0 +1,163 @@
+:root {
+  --bg: #f5f5f5;
+  --surface: #ffffff;
+  --primary: #1a73e8;
+  --primary-dark: #1765cc;
+  --text: #202124;
+  --text-secondary: #5f6368;
+  --border: #dadce0;
+  --danger: #d93025;
+  --warn: #e8710a;
+  --hover: rgba(26, 115, 232, 0.08);
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(60, 64, 67, 0.3), 0 1px 2px rgba(60, 64, 67, 0.15);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #202124;
+    --surface: #2d2e31;
+    --text: #e8eaed;
+    --text-secondary: #9aa0a6;
+    --border: #3c4043;
+    --hover: rgba(138, 180, 248, 0.12);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.appbar {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.appbar-title { font-size: 22px; font-weight: 500; }
+.appbar-sub { font-size: 13px; color: var(--text-secondary); }
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 24px 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.tab {
+  padding: 10px 18px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+}
+.tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 500; }
+
+main { max-width: 900px; margin: 0 auto; padding: 20px 24px 60px; }
+
+.tabpanel { display: none; }
+.tabpanel.active { display: block; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.row { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+.row:last-child { margin-bottom: 0; }
+.grow { flex: 1; min-width: 200px; }
+
+.input, select.input {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+}
+.input:focus { outline: 2px solid var(--primary); outline-offset: -1px; }
+
+.btn {
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { background: var(--hover); }
+.btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+.btn.primary:hover { background: var(--primary-dark); }
+.btn.small { padding: 6px 12px; font-size: 12px; }
+.btn.danger { color: var(--danger); border-color: var(--danger); }
+.btn.loading { opacity: 0.6; pointer-events: none; }
+
+.file-btn { display: inline-block; }
+
+.banner {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  background: rgba(232, 113, 10, 0.12);
+  border: 1px solid var(--warn);
+  color: var(--warn);
+  margin-bottom: 16px;
+}
+
+.list-head, .backlog-head, .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.list-head, .backlog-head { padding: 6px 4px; font-size: 13px; color: var(--text-secondary); }
+.actions-head { text-align: right; width: 150px; }
+
+.item {
+  padding: 10px;
+  border-radius: var(--radius);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.item:hover { background: var(--hover); }
+.item .main { flex: 1; min-width: 0; overflow: hidden; }
+.item .title { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item .sub { font-size: 12px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item .dur { font-size: 12px; color: var(--text-secondary); }
+.item .actions { display: flex; gap: 8px; width: 150px; justify-content: flex-end; }
+
+.empty { color: var(--text-secondary); text-align: center; padding: 24px; font-size: 14px; }
+
+.progress { margin-top: 12px; }
+.progress-bar {
+  height: 6px;
+  background: var(--primary);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.3s;
+}
+#batch-text { font-size: 12px; color: var(--text-secondary); margin-top: 4px; display: block; }
+
+.hidden { display: none; }
+
+@media (max-width: 640px) {
+  .row { flex-direction: column; align-items: stretch; }
+  .actions, .actions-head { width: auto; }
+  .item { flex-wrap: wrap; }
+}
