@@ -1,0 +1,23 @@
+{
+  "name": "songloft-plugin-lxmusic",
+  "displayName": "洛雪音源 (lxmusic)",
+  "nameZh": "洛雪音源",
+  "version": "0.1.0",
+  "description": "Songloft「洛雪音源」插件:内置多平台搜索/歌词/歌单/排行榜做元数据,并把洛雪音乐生态的第三方音源脚本(可能被 jsjiami 混淆)解析成可播放的 CDN URL 导入音乐库。插件本身不附带任何音源。",
+  "entryPath": "lxmusic",
+  "main": "main.js",
+  "minHostVersion": "0.1.0",
+  "renderEngine": "webview",
+  "permissions": [
+    "network",
+    "storage",
+    "songs.read",
+    "songs.write",
+    "playlists.read",
+    "playlists.write",
+    "jsenv"
+  ],
+  "download_url": "",
+  "entryHash": "",
+  "zipHash": ""
+}

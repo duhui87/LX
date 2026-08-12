@@ -1,0 +1,22 @@
+{
+  "name": "songloft-plugin-lxmusic",
+  "version": "0.1.0",
+  "description": "Songloft「洛雪音源」插件:多平台搜索/歌单/排行榜元数据 + 洛雪自定义音源脚本(jsjiami 混淆)播放 URL 解析",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "songloft-plugin build",
+    "dev": "songloft-plugin dev",
+    "validate": "songloft-plugin validate",
+    "publish": "songloft-plugin publish",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@songloft/plugin-builder": "*",
+    "@songloft/plugin-sdk": "*",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  }
+}
